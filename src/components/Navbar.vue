@@ -31,6 +31,12 @@
       >
         Meals By Area
       </router-link>
+      <router-link
+        :to="{ name: 'byCategories' }"
+        class="inline-flex items-center h-full px-2 transition-colors hover:bg-blue-200"
+      >
+        Meals By Categories
+      </router-link>
     </div>
   </header>
 </template>

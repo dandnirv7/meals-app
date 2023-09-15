@@ -9,6 +9,8 @@ import MealDetails from "../views/MealDetails.vue";
 import MealsByMainIngredient from "../views/MealsByMainIngredient.vue";
 import MealsByArea from "../views/MealsByArea.vue";
 import AreaDetails from "../views/AreaDetails.vue";
+import MealsByCategories from "../views/MealsByCategories.vue";
+import CategoryDetails from "../views/CategoryDetails.vue";
 
 const routes = [
   {
@@ -59,6 +61,16 @@ const routes = [
         path: "/by-area/:area",
         name: "areaDetails",
         component: AreaDetails,
+      },
+      {
+        path: "/by-categories/:categories?",
+        name: "byCategories",
+        component: MealsByCategories,
+      },
+      {
+        path: "/by-area/:category",
+        name: "categoryDetails",
+        component: CategoryDetails,
       },
     ],
   },
