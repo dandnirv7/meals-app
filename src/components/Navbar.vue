@@ -8,22 +8,28 @@
 
     <div>
       <router-link
-        :to="{name: 'byName'}"
+        :to="{ name: 'byName' }"
         class="inline-flex items-center h-full px-2 transition-colors hover:bg-blue-200"
       >
         Search Meals
       </router-link>
       <router-link
-        :to="{name: 'byLetter'}"
+        :to="{ name: 'byLetter' }"
         class="inline-flex items-center h-full px-2 transition-colors hover:bg-blue-200"
       >
         Meals By Letter
       </router-link>
       <router-link
-        :to="{name: 'byIngredients'}"
+        :to="{ name: 'byIngredients' }"
         class="inline-flex items-center h-full px-2 transition-colors hover:bg-blue-200"
       >
         Meals By Ingredients
+      </router-link>
+      <router-link
+        :to="{ name: 'byArea' }"
+        class="inline-flex items-center h-full px-2 transition-colors hover:bg-blue-200"
+      >
+        Meals By Area
       </router-link>
     </div>
   </header>
