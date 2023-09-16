@@ -84,22 +84,27 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="flex flex-wrap items-center justify-center gap-x-2">
-    <template v-for="(area, index) in areas" :key="area.strArea">
-      <router-link
-        :to="{
-          name: 'areaDetails',
-          params: {
-            area: area.strArea,
-          },
-        }"
-      >
-        <img
-          :src="images[index]"
-          :alt="area.strArea"
-          class="w-16 h-16 bg-cover"
-        />
-      </router-link>
-    </template>
+  <div class="my-10 px-5">
+    <h1 class="text-xl font-bold text-center">Browse Country</h1>
+    <div
+      class="flex flex-wrap items-center justify-center mt-4 gap-x-2 xl:w-4/5 mx-auto"
+    >
+      <template v-for="(area, index) in areas" :key="area.strArea">
+        <router-link
+          :to="{
+            name: 'areaDetails',
+            params: {
+              area: area.strArea,
+            },
+          }"
+        >
+          <img
+            :src="images[index]"
+            :alt="area.strArea"
+            class="w-16 h-16 bg-cover"
+          />
+        </router-link>
+      </template>
+    </div>
   </div>
 </template>

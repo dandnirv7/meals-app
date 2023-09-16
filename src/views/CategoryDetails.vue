@@ -10,7 +10,6 @@ const strCategory = route.params.category;
 onMounted(async () => {
   try {
     const { data } = await axiosClient.get(`filter.php?c=${strCategory}`);
-    // console.log(strCategory);
     meals.value = data.meals;
   } catch (error) {
     console.log("error fetching data: ", error);

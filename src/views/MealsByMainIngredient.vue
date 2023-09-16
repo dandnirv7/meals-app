@@ -20,13 +20,13 @@ onMounted(async () => {
 
 <template>
   <div>
-    <a @click="$router.go(-1)" class="cursor-pointer ml-5 mt-5 block">back</a>
-
-    <div class="grid grid-cols-1 gap-3 py-5 md:grid-cols-4 place-items-center">
+    <div
+      class="grid grid-cols-1 gap-3 py-5 lg:grid-cols-3 xl:grid-cols-4 md:grid-cols-2 px-5 place-items-center"
+    >
       <div
         v-for="meal in meals"
         :key="meal.idMeal"
-        class="w-64 p-4 mt-5 bg-white rounded-md shadow h-80"
+        class="w-64 p-4 mt-5 bg-white rounded-md shadow h-[360px]"
       >
         <router-link :to="{ name: 'mealDetails', params: { id: meal.idMeal } }">
           <img
@@ -35,29 +35,16 @@ onMounted(async () => {
             class="rounded-md"
           />
         </router-link>
-        <h1>Name: {{ meal.strMeal }}</h1>
+        <div class="mt-3">
+          <h1>{{ meal.strMeal }}</h1>
 
-        <router-link
-          :to="{ name: 'mealDetails', params: { id: meal.idMeal } }"
-          class="text-blue-500 underline"
-        >
-          Detail
-        </router-link>
-
-        <!-- <div class="flex flex-row items-center mt-5 mb-4 gap-x-2">
-            <a
-              :href="meal.strYoutube"
-              target="_blank"
-              class="bg-red-500 px-5 py-2.5 rounded-md shadow shadow-black/50 text-white text-center hover:bg-red-600 transition-colors duration-200 font-semibold"
-              >Youtube</a
-            >
-            <a
-              :href="meal.strSource"
-              target="_blank"
-              class="bg-red-500 px-5 py-2.5 rounded-md shadow shadow-black/50 text-white text-center hover:bg-red-600 transition-colors duration-200 font-semibold"
-              >Source</a
-            >
-          </div> -->
+          <router-link
+            :to="{ name: 'mealDetails', params: { id: meal.idMeal } }"
+            class="text-blue-500 underline"
+          >
+            Detail
+          </router-link>
+        </div>
       </div>
     </div>
   </div>

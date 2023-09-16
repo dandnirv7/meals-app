@@ -4,12 +4,16 @@ import { useRoute } from "vue-router";
 import axiosClient from "../axiosClient";
 
 const meal = ref({});
+const images = ref([]);
 const route = useRoute();
 
 const extractIngredientsMeasures = (prefix) => {
-  return Object.keys(meal.value)
-    .filter((key) => key.startsWith(prefix) && meal.value[key].trim() !== "")
-    .map((key) => meal.value[key]);
+  if (meal.value) {
+    return Object.keys(meal.value)
+      .filter((key) => key.startsWith(prefix) && meal.value[key]?.trim() !== "")
+      .map((key) => meal.value[key]);
+  }
+  return [];
 };
 
 const mealIngredients = computed(() => {
@@ -29,65 +33,91 @@ const numberedInstructions = computed(() => {
     .map((line, index) => `${index + 1}. ${line}`);
 });
 
+const formatName = (name) => {
+  return name.replaceAll(" ", "%20");
+};
+
 onMounted(async () => {
-  const { data } = await axiosClient.get(`lookup.php?i=${route.params.id}`);
-  meal.value = data.meals[0] || {};
+  try {
+    const { data } = await axiosClient.get(`lookup.php?i=${route.params.id}`);
+    meal.value = data.meals[0] || {};
+
+    const imageUrls = mealIngredients.value.map((item) => {
+      return `https://themealdb.com/images/ingredients/${item}.png`;
+    });
+    images.value = imageUrls;
+  } catch (error) {
+    console.log("error fetching data: ", error);
+  }
 });
 </script>
 
 <template>
-  <div class="p-8 flex flex-row space-x-5">
-    <div class="w-2/5 space-y-5">
-      <h1 class="text-3xl font-bold">{{ meal.strMeal }}</h1>
-      <img :src="meal.strMealThumb" :alt="meal.strMeal" />
-      <div class="flex flex-col justify-between">
-        <span>Category: {{ meal.strCategory }}</span>
-        <span>Area: {{ meal.strArea }}</span>
+  <div>
+    <div
+      class="flex flex-col justify-center items-center md:justify-start md:items-start md:flex-row px-8 py-8 md:space-x-5"
+    >
+      <div class="md:w-2/5 space-y-5">
+        <h1 class="text-2xl font-bold text-center md:text-start">
+          {{ meal.strMeal }}
+        </h1>
+        <img :src="meal.strMealThumb" :alt="meal.strMeal" />
+        <div class="flex flex-col justify-between">
+          <span
+            >Category:
+
+            <router-link
+              :to="{
+                name: 'byCategories',
+                params: {
+                  categories: meal.strCategory,
+                },
+              }"
+              >{{ meal.strCategory }}</router-link
+            >
+          </span>
+          <span
+            >Area:
+
+            <router-link :to="'/by-area/' + meal.strArea">{{
+              meal.strArea
+            }}</router-link>
+          </span>
+        </div>
       </div>
-    </div>
-    <div class="w-full py-12">
-      <div class="flex flex-row space-x-52">
+      <div class="w-full mt-5 md:mt-0">
         <div>
-          <h2 class="text-2xl font-bold">Ingredients</h2>
-          <ul class="mt-2">
+          <h2 class="text-2xl font-bold text-center md:text-start">
+            Ingredients
+          </h2>
+          <ul
+            class="mt-5 grid grid-cols-2 lg:grid-cols-5 md:grid-cols-4 gap-y-5 place-items-start justify-items-center"
+          >
             <li
               v-for="(ingredient, index) in mealIngredients"
               :key="index"
-              class="flex flex-row justify-start gap-x-1 capitalize"
+              class="flex flex-col items-center capitalize space-y-3.5"
             >
-              <p class="w-5 text-center">{{ index + 1 }}.</p>
-              <p>
-                {{ ingredient }}
+              <div class="">
+                <img :src="formatName(images[index])" alt="" class="w-24" />
+              </div>
+              <p class="text-center">
+                {{ mealMeasures[index] }} {{ ingredient }}
               </p>
             </li>
           </ul>
         </div>
-        <div>
-          <h2 class="text-2xl font-bold">Measures</h2>
-          <ul class="mt-2">
-            <li
-              v-for="(measure, index) in mealMeasures"
-              :key="index"
-              class="flex flex-row justify-start gap-x-1 capitalize"
-            >
-              <p class="w-5 text-center">{{ index + 1 }}.</p>
-              <p>
-                {{ measure }}
-              </p>
-            </li>
-          </ul>
+        <div class="mt-4">
+          <h2 class="text-2xl font-bold">Instructions</h2>
+          <template
+            v-for="instruction in numberedInstructions"
+            :key="instruction"
+          >
+            <p class="mt-2">
+              {{ instruction }}
+            </p>
+          </template>
         </div>
-      </div>
-      <div class="mt-4">
-        <h2 class="text-2xl font-bold">Instructions</h2>
-        <template
-          v-for="instruction in numberedInstructions"
-          :key="instruction"
-        >
-          <p class="mt-2">
-            {{ instruction }}
-          </p>
-        </template>
       </div>
     </div>
   </div>

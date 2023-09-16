@@ -26,11 +26,13 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center mt-5">
+  <div class="flex flex-col items-center justify-center my-5">
     <h2 class="text-2xl font-bold">Popular Ingredients</h2>
-    <div class="grid grid-cols-8 gap-10 px-10 py-5 place-items-center">
+    <div
+      class="grid grid-cols-2 py-5 md:grid-cols-4 lg:grid-cols-7 justify-items-center md:gap-10 md:px-10 place-items-center"
+    >
       <template
-        v-for="(ingredient, index) in ingredients.slice(0, 24)"
+        v-for="(ingredient, index) in ingredients.slice(0, 21)"
         :key="ingredient"
       >
         <router-link
@@ -40,7 +42,7 @@ onMounted(async () => {
               ingredient: formatIngredient(ingredient.strIngredient),
             },
           }"
-          class="hover:text-amber-500"
+          class="mt-4 hover:text-amber-500"
         >
           <div class="flex flex-col items-center">
             <div>
@@ -59,6 +61,5 @@ onMounted(async () => {
         </router-link>
       </template>
     </div>
-    <MealsByLetter />
   </div>
 </template>

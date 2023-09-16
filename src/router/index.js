@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import DefaultLayout from "../views/DefaultLayout.vue";
 import HomeView from "../views/HomeView.vue";
-import MealList from "../views/MealList.vue";
 import MealsByName from "../views/MealsByName.vue";
 import MealsByLetter from "../views/MealsByLetter.vue";
 import MealsByIngredients from "../views/MealsByIngredients.vue";
@@ -15,6 +14,7 @@ import CategoryDetails from "../views/CategoryDetails.vue";
 const routes = [
   {
     path: "/",
+    redirect: "/home",
     component: DefaultLayout,
     children: [
       {
@@ -22,11 +22,11 @@ const routes = [
         name: "home",
         component: HomeView,
       },
-      {
-        path: "letter/:letter",
-        name: "letter",
-        component: MealList,
-      },
+      // {
+      //   path: "letter/:letter",
+      //   name: "letter",
+      //   component: MealList,
+      // },
       {
         path: "by-name/:name?",
         name: "byName",
@@ -53,7 +53,7 @@ const routes = [
         component: MealsByMainIngredient,
       },
       {
-        path: "/by-area/:area?",
+        path: "/by-area/:areas?",
         name: "byArea",
         component: MealsByArea,
       },
@@ -68,7 +68,7 @@ const routes = [
         component: MealsByCategories,
       },
       {
-        path: "/by-area/:category",
+        path: "/by-categories/:category",
         name: "categoryDetails",
         component: CategoryDetails,
       },

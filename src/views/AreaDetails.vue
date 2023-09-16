@@ -19,13 +19,13 @@ onMounted(async () => {
 
 <template>
   <div>
-    <a @click="$router.go(-1)" class="block mt-5 ml-5 cursor-pointer">back</a>
-
-    <div class="grid grid-cols-1 gap-3 py-5 md:grid-cols-4 place-items-center">
+    <div
+      class="grid grid-cols-1 gap-3 pb-8 md:grid-cols-3 place-items-center lg:grid-cols-4"
+    >
       <div
         v-for="meal in meals"
         :key="meal.idMeal"
-        class="w-64 p-4 mt-5 bg-white rounded-md shadow"
+        class="w-64 p-4 mt-5 bg-white rounded-md shadow h-[360px]"
       >
         <router-link :to="{ name: 'mealDetails', params: { id: meal.idMeal } }">
           <img
@@ -36,11 +36,11 @@ onMounted(async () => {
         </router-link>
 
         <div class="flex flex-col mt-4 gap-y-4">
-          <h1>Name: {{ meal.strMeal }}</h1>
+          <h1>{{ meal.strMeal }}</h1>
 
           <router-link
             :to="{ name: 'mealDetails', params: { id: meal.idMeal } }"
-            class="text-blue-500 underline"
+            class="text-blue-500 underline w-max"
           >
             Detail
           </router-link>
